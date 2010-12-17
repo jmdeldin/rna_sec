@@ -16,7 +16,7 @@ module RnaSec
 
     # returns a tree
     def parse
-      raise "Uneven lengths" if @seq.length != @vienna.length
+      raise ParserException, "Uneven lengths" if @seq.length != @vienna.length
 
       #
       # determine the root node

@@ -9,5 +9,7 @@ module RnaSec
       raise "#{self.class} must be implemented in a child-class."
     end
   end
+
+  class ParserException < StandardError; end
 end
 
