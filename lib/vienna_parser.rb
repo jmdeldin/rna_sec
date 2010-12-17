@@ -34,12 +34,19 @@ module RnaSec
           :key1 => Base.new(get_nuc(0)),
           :key2 => Base.new(get_nuc(-1)),
         )
+      # TODO: Improve matching when the terminating nucleotides are different
       elsif @vienna[0] == '.' && @vienna[-1] == ')'
         tree = Tree.new(
-          :key1 => Base.new(get_nuc(0))
+          :key1 => Base.new(get_nuc(1)),
+          :key2 => Hairpin.new(get_nuc(-1), :end),
+        )
+      elsif @vienna[0] == '(' && @vienna[-1] == '.'
+        tree = Tree.new(
+          :key1 => Hairpin.new(get_nuc(1), :start),
+          :key2 => Base.new(get_nuc(-1)),
         )
       else
-        raise "Unable to build tree structure"
+        raise ParserException, "Unable to build tree structure"
       end
 
       # figure out what the rest of the sequence is
