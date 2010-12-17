@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+#
+# Runs RNAFold on a FASTA-file and loads the resulting Vienna structures into
+# a tree object.
+#
+# usage:
+#  bin/rnasec ../data/2010-11-15.aptamers.txt
+
+require_relative '../lib/fasta_file'
+require_relative '../lib/rna_fold'
+require_relative '../lib/vienna_parser'
+
+abort "ERR: No file specified" if ARGV.empty?
+
+module RnaSec
+  # read FASTA
+  f = FastaFile.new(ARGV[0])
+  entries = f.entries
+  puts "...read #{entries.length} entries"
+
+  # get secondary structures & throw into tree
+  forest = []
+  vienna = []
+  parser, r  = nil
+  entries.each do |seq|
+    begin
+      r = RnaFold.new(seq)
+      vienna << r.results
+      parser = ViennaParser.new(seq, r.results)
+      forest << parser.parse
+    rescue => e
+      puts "[error] #{e} for #{seq}"
+    end
+  end
+  puts "...folded #{vienna.length} sequences"
+  puts "...built #{forest.length} tree"
+
+  puts
+  puts "...compare RNAFold structure to tree"
+  forest.entries.each_with_index do |t, i|
+    puts "#{entries[i]}"
+    puts "\t#{vienna[i]}"
+    puts "\t#{t.to_vienna}"
+  end
+end
+
