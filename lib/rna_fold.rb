@@ -25,10 +25,13 @@ module RnaSec
         end
       end
 
-      raise 'RNAFold could not find a structure' if vienna.nil?
+      raise RnaFoldException, 'Could not find a structure' if vienna.nil?
 
       vienna
     end
+  end
+
+  class RnaFoldException < StandardError
   end
 end
 

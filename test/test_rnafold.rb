@@ -16,7 +16,7 @@ class TestRnaFold < Test::Unit::TestCase
 
   def test_empty_sequence
     r = RnaSec::RnaFold.new('')
-    assert_raise(RuntimeError) do
+    assert_raise(RnaSec::RnaFoldException) do
       r.results
     end
   end
