@@ -1,0 +1,6 @@
+= Dependencies
+
+Ruby 1.9.2
+autotest 4.4.6
+
+RNAFold
