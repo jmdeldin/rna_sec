@@ -1,15 +1,20 @@
 require 'test/unit'
 require_relative '../lib/vienna_parser'
 
-module RnaSec
-  class TestViennaParser < Test::Unit::TestCase
-    def test_parser
-      seqs = 'UGGAAGAAGCUCUGGCAGCUUUUUAAGCGUUUAUAUAAGAGUUAUAUAUAUGCGCGUUCCA'
-      fmt  = '.(((.((((((.....))))))....((((.((((((.......)))))).))))..))).'
-      parser = ViennaParser.new(seqs, fmt)
-      parsed = parser.parse.join('')
-      assert_equal(parsed, fmt, 'Input == Output')
-    end
+class TestViennaParser < Test::Unit::TestCase
+  def test_simple_vienna
+    seq = 'UA'
+    fmt  = '..'
+    parser = RnaSec::ViennaParser.new(seq, fmt)
+    assert_equal '..', parser.parse.to_vienna, 'Vienna is incorrect'
+  end
+
+  def test_complex_vienna
+    seq = 'UGGAAGAAGCUCUGGCAGCUUUUUAAGCGUUUAUAUAAGAGUUAUAUAUAUGCGCGUUCCA'
+    fmt  = '.(((.((((((.....))))))....((((.((((((.......)))))).))))..))).'
+    parser = RnaSec::ViennaParser.new(seq, fmt)
+    parsed = parser.parse.to_vienna
+    assert_equal fmt, parsed, 'Vienna is incorrect'
   end
 end
 
