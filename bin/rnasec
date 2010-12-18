@@ -33,7 +33,7 @@ module RnaSec
     end
   end
   puts "...folded #{vienna.length} sequences"
-  puts "...built #{forest.length} tree"
+  puts "...built #{forest.length} trees"
 
   puts
   puts "...compare RNAFold structure to tree"
