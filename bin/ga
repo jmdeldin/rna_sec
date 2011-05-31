@@ -1,0 +1,45 @@
+#! /usr/bin/env ruby
+#
+# Uses a genetic algorithm to evolve back to an original tree.
+#
+
+require_relative '../lib/genetic_algorithm'
+require_relative '../lib/ct_parser'
+require_relative '../lib/tree'
+
+require 'optparse'
+options = { records: nil, terminate: 1.0, mutation: 0.5, popsize: 100 }
+
+opts = OptionParser.new do |o|
+  o.banner = ""
+
+  o.on('-d', '--data CT_FILE', String, 'CT file to parse') do |d|
+    options[:records] = RnaSec::CtParser::Parser.get_records(d)
+  end
+
+  o.on('-p', '--POPULATION 100', Integer, 'Population size') do |p|
+    options[:popsize] = p
+  end
+
+  o.on('-t', '--TERMINATE 1.0', Float, '% of population that must be identical') do |t|
+    options[:terminate] = t
+  end
+
+  o.on('-m', '--MUTATION 0.50', Float, '% of population to mutate') do |m|
+    options[:mutation] = m
+  end
+
+  o.on('-h', '--help', 'Show this message') { abort(opts.to_s) }
+end
+
+opts.parse!(ARGV)
+abort(opts.to_s) if options[:records].nil?
+
+ga = RnaSec::GeneticAlgorithm::Runner.new(
+  RnaSec::CtParser::Parser.parse(options[:records]),
+  options[:popsize],
+  options[:terminate],
+  options[:mutation]
+)
+ga.run
+
