@@ -44,11 +44,11 @@ end
 # Returns the filename of a fixture file.
 #
 # fn    -- fixture filename
-# local -- local test directory name (e.g., File.dirname(__FILE__))
+# local -- local test file -- just pass __FILE__ to it
 #
 def get_fixture(fn, local = '')
   if local
-    File.join(test_root(), local, 'fixtures', fn)
+    File.join(test_root(), File.basename(File.dirname(local)), 'fixtures', fn)
   else
     File.join(test_root(), 'fixtures', fn)
   end
