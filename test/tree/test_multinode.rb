@@ -1,9 +1,9 @@
 require_relative 'test_helper'
 
 # TODO: Remove aliases after major refactoring
-class Base      < RnaSec::Tree::Base; end
-class BasePair  < RnaSec::Tree::BasePair; end
-class MultiNode < RnaSec::Tree::MultiNode; end
+Base      = RnaSec::Tree::Base
+BasePair  = RnaSec::Tree::BasePair
+MultiNode = RnaSec::Tree::MultiNode
 
 class TestMultiNode < MiniTest::Unit::TestCase
 
@@ -13,7 +13,7 @@ class TestMultiNode < MiniTest::Unit::TestCase
       BasePair.new(Base.new(4, :g), Base.new(5, :c)),
     ]
     @ends = BasePair.new(Base.new(1, :g), Base.new(6, :c))
-    @m    = MultiNode.new(@ends, @bases) 
+    @m    = MultiNode.new(@ends, @bases)
   end
 
   def test_new_fails_with_nils
@@ -47,7 +47,13 @@ class TestMultiNode < MiniTest::Unit::TestCase
   end
 
   def test_to_vienna
-    assert_equal 'MultiNode<G1-C6>(BasePair<G2-C3>BasePair<G4-C5>)', @m.to_vienna
+    exp = %w[
+    RnaSec::Tree::MultiNode<G1-C6>(
+        RnaSec::Tree::BasePair<G2-C3>
+        RnaSec::Tree::BasePair<G4-C5>
+    )
+    ].join()
+    assert_equal exp, @m.to_vienna
   end
 
   def test_get_bounds_on_multinode
