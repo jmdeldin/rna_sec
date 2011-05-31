@@ -31,6 +31,7 @@ module RnaSec::CtParser
           bases = []
 
         elsif rule.base_pair_part?
+
           # If we are looking at the 5' end, make the BasePair before we
           # actually see the 3' end.
           if rec.idx < rec.pair_idx
@@ -41,15 +42,22 @@ module RnaSec::CtParser
             three_down << rec.pair_idx
           else
             # Since we already made the BP when we saw the 5' end, skip this
-            # record.
-            three_down.pop()
-            next
+            # record. We check for bases just in case this is a BP part
+            # following a bulge.
+            unless bases.any?
+              three_down.pop()
+              next
+            end
           end
 
           if rule.internal_loop?
             root.children << curroot unless curroot.is_a?(RnaSec::Tree::Root)
             curroot = RnaSec::Tree::InternalLoop.new(last, [ cur ])
+          elsif rule.bulge?
+            curroot.children << RnaSec::Tree::Bulge.new(bases)
+            bases = []
           end
+
         elsif rule.single?
           cur = RnaSec::Tree::Base.new(rec.idx, rec.nuc)
           bases << cur
@@ -57,6 +65,12 @@ module RnaSec::CtParser
         end
 
         last = cur
+      end
+
+      # Sometimes, we have a trailing strand of bases
+      if bases.any?
+        curroot.children << RnaSec::Tree::Bulge.new(bases)
+        bases = []
       end
 
       # If we never got past one level, return curroot.

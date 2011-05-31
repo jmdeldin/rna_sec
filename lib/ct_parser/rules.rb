@@ -65,7 +65,7 @@ module RnaSec::CtParser
     #
     # @return [Boolean]
     def bulge?
-      !hairpin? && base_pair_part? && @bases.any?
+      !hairpin? && !internal_loop? && base_pair_part? && @bases.any?
     end
 
     # Determines if we can form a hairpin with the current environment.
