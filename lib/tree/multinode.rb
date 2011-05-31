@@ -48,13 +48,7 @@ module RnaSec::Tree
       s = self.class.to_s + "<#{@five_nuc.upcase}#{@five_idx}-#{@three_nuc.upcase}#{@three_idx}>"
 
       if children().any?
-        s += '('
-
-        self.children.each_with_index do |child, i|
-          s += child.to_vienna
-        end
-
-        s += ')'
+        s += '(' + children.map { |x| x.to_vienna() }.join(', ') + ')'
       end
 
       s

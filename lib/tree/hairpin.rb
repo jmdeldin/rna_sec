@@ -13,6 +13,23 @@ module RnaSec::Tree
       [ @five_idx, @three_idx, @children.map { |x| x.idx } ]
     end
 
+    # (see {RnaSec::Tree::MultiNode#to_vienna})
+    #
+    def to_vienna
+      [
+        self.class.to_s,
+        '<',
+          @five_nuc.upcase,
+          @five_idx,
+        '-',
+          @three_nuc.upcase,
+          @three_idx,
+        '>',
+        '(',
+          @children.map { |x| '.' }.join(),
+        ')',
+      ].join()
+    end
   end
 
 end

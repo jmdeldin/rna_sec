@@ -24,7 +24,7 @@ module RnaSec::Tree
       s = self.class.to_s
 
       if children.any?
-        s += '(' + children.map { |x| x.to_vienna() }.join() + ')'
+        s += '(' + children.map { |x| x.to_vienna() }.join(', ') + ')'
       end
 
       s
