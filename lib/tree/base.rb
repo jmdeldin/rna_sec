@@ -17,6 +17,17 @@ module RnaSec::Tree
       @nuc = nuc
     end
 
+    # Returns the base's index in an array.
+    #
+    # @note This is provided for compatibility with {MultiNode#get_child_positions}.
+    # @todo Update Node with this method
+    #
+    # @return [Fixnum[]]
+    #
+    def get_child_positions
+      [@idx]
+    end
+
     # (see RnaSec::Tree::Node#to_vienna)
     #
     def to_vienna
