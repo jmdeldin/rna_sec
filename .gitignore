@@ -1,0 +1,9 @@
+# rcov generated
+coverage
+
+.yardoc
+doc
+
+.bundle
+
+

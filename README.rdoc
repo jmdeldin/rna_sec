@@ -1,0 +1,9 @@
+= RNASec
+
+RNASec is a library for representing RNA secondary structures as tree
+data structures.
+
+== Author
+
+Jon-Michael Deldin <jon-michael.deldin@umontana.edu>
+
