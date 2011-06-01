@@ -3,6 +3,39 @@
 RNASec is a library for representing RNA secondary structures as tree
 data structures.
 
+== Usage
+
+To ``evolve back'' to the MBE1A tree, execute
+
+  $ bin/ga -d data/mbe1a.ct
+
+For available options, execute
+
+  $ bin/ga -h
+
+== Requirements
+
+Ruby 1.9 is required. If you wish to run unit tests, you will need to
+follow these steps:
+
+
+  # Install `bundler':
+  $ gem install bundler
+
+  # Install all dependencies:
+  $ bundle install
+
+Then you can test and develop:
+
+  # Run tests:
+  $ rake test
+
+  # Documentation:
+  $ rake yard
+
+  # Coverage/stats:
+  $ rake rcov
+
 == Author
 
 Jon-Michael Deldin <jon-michael.deldin@umontana.edu>
