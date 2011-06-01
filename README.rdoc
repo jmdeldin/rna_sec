@@ -1,11 +1,9 @@
-= RnaSec -- Secondary Structures Represented as Trees
+= RNASec
 
-== Usage
+RNASec is a library for representing RNA secondary structures as tree
+data structures.
 
-  $ bin/rnasec data/2010-11-15.aptamers.txt
+== Author
 
-== Dependencies
-
-- Ruby 1.9.2
-- RNAFold (http://www.tbi.univie.ac.at/~ivo/RNA/index.html)
+Jon-Michael Deldin <jon-michael.deldin@umontana.edu>
 
