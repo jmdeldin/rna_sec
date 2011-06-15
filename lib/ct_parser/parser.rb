@@ -27,7 +27,7 @@ module RnaSec::CtParser
         # If we saw a hairpin, add the hairpin to the curroot, clear out bases
         if rule.hairpin?
           cur = RnaSec::Tree::Hairpin.new(last, bases)
-          curroot.children << cur
+          curroot << cur
           bases = []
 
         elsif rule.base_pair_part?
@@ -51,10 +51,10 @@ module RnaSec::CtParser
           end
 
           if rule.internal_loop?
-            root.children << curroot unless curroot.is_a?(RnaSec::Tree::Root)
+            root << curroot unless curroot.is_a?(RnaSec::Tree::Root)
             curroot = RnaSec::Tree::InternalLoop.new(last, [ cur ])
           elsif rule.bulge?
-            curroot.children << RnaSec::Tree::Bulge.new(bases)
+            curroot << RnaSec::Tree::Bulge.new(bases)
             bases = []
           end
 
@@ -69,7 +69,7 @@ module RnaSec::CtParser
 
       # Sometimes, we have a trailing strand of bases
       if bases.any?
-        curroot.children << RnaSec::Tree::Bulge.new(bases)
+        curroot << RnaSec::Tree::Bulge.new(bases)
         bases = []
       end
 
@@ -78,8 +78,7 @@ module RnaSec::CtParser
         curroot
       else
         # Otherwise, append the last root to the parent Root.
-        root.children << curroot
-        root
+        root << curroot
       end
     end
 

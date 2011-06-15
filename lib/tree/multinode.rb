@@ -253,7 +253,7 @@ module RnaSec::Tree
     #
     def insert(pos, tree)
       if @children.empty?
-        @children << tree
+        self.<<(tree)
         return self
       end
 
@@ -270,7 +270,7 @@ module RnaSec::Tree
           # If we're looking at the last element, and we haven't inserted yet,
           # then go ahead and insert
         elsif i == last
-          @children << tree
+          self.<<(tree)
           return self
         end
       end
