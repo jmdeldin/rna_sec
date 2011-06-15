@@ -63,6 +63,7 @@ module RnaSec::Tree
     def <<(child)
       child.parent = self
       @children << child
+      self
     end
 
     # (see RnaSec::Tree::Node#to_vienna)
