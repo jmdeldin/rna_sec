@@ -80,6 +80,14 @@ class TestMultiNode < MiniTest::Unit::TestCase
     assert_equal @bases.size, @m.size
   end
 
+  def test_clone_updates_parent_references
+    copy = @m.clone()
+
+    @m.zip(copy) do |src, dest|
+      assert src.parent.object_id != dest.parent.object_id
+    end
+  end
+
   def test_get_child_positions_when_bps_for_children
     assert_equal [1, 6, [[2, 3], [4, 5]]], @m.get_child_positions()
   end

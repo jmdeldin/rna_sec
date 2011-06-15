@@ -136,7 +136,11 @@ module RnaSec::Tree
     def initialize_copy(source)
       super
       @children = []
-      source.children.each { |x| @children << x.clone() }
+      source.children.each do |x|
+        tmp = x.clone()
+        tmp.parent = self
+        @children << tmp
+      end
     end
 
     # Returns an array-of-arrays of the nucleotide indexes.
