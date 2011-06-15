@@ -2,10 +2,16 @@
 #
 class RnaSec::Tree::Node
 
-  attr_reader :idx
-
   def initialize
     fail(NotImplementedError, "do not call Node.new directly")
+  end
+
+  def idx
+    fail(NotImplementedError, 'Use an attribute reader for @idx')
+  end
+
+  def parent
+    fail(NotImplementedError, 'Use an attribute reader for @parent')
   end
 
   # Returns a combination of Vienna and expanded Shapiro for debugging.
