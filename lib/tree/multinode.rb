@@ -25,7 +25,8 @@ module RnaSec::Tree
     attr_reader :three_nuc
     attr_reader :three_idx
 
-    attr_accessor :children
+    attr_reader   :children
+    attr_accessor :parent
 
     # @param [BasePair] bp        Terminal base pair.
     # @param [Array]    children  Array of subnodes.
@@ -39,7 +40,29 @@ module RnaSec::Tree
       @five_nuc  = bp.five_nuc
       @three_idx = bp.three_idx
       @three_nuc = bp.three_nuc
-      @children  = children
+      @parent    = nil
+      self.children=(children)
+    end
+
+    # Set the children of this node and update their parent references.
+    #
+    # @param [Node[]] children
+    # @return [Array]
+    #
+    def children=(children)
+      @children = children.each do |c|
+        c.parent = self
+      end
+    end
+
+    # Append a child to the tree.
+    #
+    # @param [Node] child
+    # @return [Array]
+    #
+    def <<(child)
+      child.parent = self
+      @children << child
     end
 
     # (see RnaSec::Tree::Node#to_vienna)

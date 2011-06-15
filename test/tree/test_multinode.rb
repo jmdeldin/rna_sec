@@ -97,12 +97,11 @@ class TestMultiNode < MiniTest::Unit::TestCase
     assert_equal [1, 7, [2, 3, 4, 5, 6]], tree.get_child_positions()
   end
 
-  def test_get_child_positions_when_children_are_not_nodes
+  def test_children_must_implement_parent_method
     tree = MultiNode.new(BasePair.new(Base.new(1, :c), Base.new(7, :u)))
-    tree.children = %w[ foo bar baz ]
 
-    assert_raises RuntimeError do
-      tree.get_child_positions()
+    assert_raises NoMethodError do
+      tree.children = %w[ foo bar baz ]
     end
   end
 
@@ -189,6 +188,23 @@ class TestMultiNode < MiniTest::Unit::TestCase
     il.insert(@bases[0].five_idx, @bases[0])
     assert_equal @bases[0], il.children[0]
     assert_equal @bases[1], il.children[1]
+  end
+
+  def test_get_parent_is_correct_for_assignment
+    parent = MultiNode.new(BasePair.new(Base.new(1, :g), Base.new(4, :c)))
+    child  = BasePair.new(Base.new(2, :g), Base.new(3, :c))
+    parent.children = [ child ]
+
+    assert_equal parent.object_id, child.parent.object_id
+  end
+
+  def test_get_parent_is_correct_for_append
+    parent = MultiNode.new(BasePair.new(Base.new(1, :g), Base.new(4, :c)))
+    child  = BasePair.new(Base.new(2, :g), Base.new(3, :c))
+    parent << child
+
+    assert_equal parent.object_id, child.parent.object_id
+    assert_equal parent.five_idx, child.parent.five_idx
   end
 
 end

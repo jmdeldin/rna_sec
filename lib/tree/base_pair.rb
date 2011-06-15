@@ -15,6 +15,8 @@ module RnaSec::Tree
     attr_reader :three_nuc
     attr_reader :three_idx
 
+    attr_accessor :parent
+
     # @param [Base] five    5' end
     # @param [Base] three   3' end
     #
@@ -23,6 +25,7 @@ module RnaSec::Tree
       @five_idx  = five.idx
       @three_nuc = three.nuc
       @three_idx = three.idx
+      @parent    = nil
     end
 
     # Returns a nested array of the 5' and 3' indexes.

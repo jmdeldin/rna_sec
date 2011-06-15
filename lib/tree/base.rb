@@ -6,6 +6,7 @@ module RnaSec::Tree
 
     attr_reader :idx
     attr_reader :nuc
+    attr_accessor :parent
 
     # @param [Fixnum] idx  nucleotide index
     # @param [Symbol] nuc  nucleotide character (e.g., :a, :c, :g, :u})
@@ -15,6 +16,7 @@ module RnaSec::Tree
       raise(ArgumentError, 'Nucleotide is not a Symbol') unless nuc.is_a? Symbol
       @idx = idx
       @nuc = nuc
+      @parent = nil
     end
 
     # Returns the base's index in an array.
