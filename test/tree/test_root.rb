@@ -10,12 +10,12 @@ class TestRoot < MiniTest::Unit::TestCase
     r = RnaSec::Tree::Root.new()
     assert_equal 'RnaSec::Tree::Root', r.to_vienna
 
-    r.children = [ 
+    r.children = [
       RnaSec::Tree::Base.new(1, :c),
       RnaSec::Tree::Base.new(2, :g),
     ]
 
-    assert_equal 'RnaSec::Tree::Root(..)', r.to_vienna
+    assert_equal 'RnaSec::Tree::Root(., .)', r.to_vienna
   end
 
 end

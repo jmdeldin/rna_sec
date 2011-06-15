@@ -49,8 +49,7 @@ class TestMultiNode < MiniTest::Unit::TestCase
   def test_to_vienna
     exp = %w[
     RnaSec::Tree::MultiNode<G1-C6>(
-        RnaSec::Tree::BasePair<G2-C3>
-        RnaSec::Tree::BasePair<G4-C5>
+        RnaSec::Tree::BasePair<G2-C3>,\ RnaSec::Tree::BasePair<G4-C5>
     )
     ].join()
     assert_equal exp, @m.to_vienna
