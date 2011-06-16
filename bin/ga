@@ -8,7 +8,7 @@ require_relative '../lib/ct_parser'
 require_relative '../lib/tree'
 
 require 'optparse'
-options = { records: nil, terminate: 1.0, mutation: 0.5, popsize: 100 }
+options = { records: nil, terminate: 1.0, mutation: 0.5, popsize: 100, submutation: 12 }
 
 opts = OptionParser.new do |o|
   o.banner = ""
@@ -29,6 +29,10 @@ opts = OptionParser.new do |o|
     options[:mutation] = m
   end
 
+  o.on('-s', '--SUBMUTATION 12', Integer, 'Number of times to mutate each member chosen for mutation') do |s|
+    options[:submutation] = s
+  end
+
   o.on('-h', '--help', 'Show this message') { abort(opts.to_s) }
 end
 
@@ -39,7 +43,8 @@ ga = RnaSec::GeneticAlgorithm::Runner.new(
   RnaSec::CtParser::Parser.parse(options[:records]),
   options[:popsize],
   options[:terminate],
-  options[:mutation]
+  options[:mutation],
+  options[:submutation],
 )
 ga.run
 

@@ -1,19 +1,24 @@
 require_relative '../genetic_algorithm'
 require_relative '../tree'
 
+# Proof-of-concept genetic algorithm that scrambles a tree and tries to
+# achieve the original structure.
+#
 class RnaSec::GeneticAlgorithm::Runner
 
   # @param [RnaSec::Tree::Root] src Fully-populated tree
   # @param [Fixnum] popsize   Desired population size
   # @param [Float]  terminate % of population that must be equal to the source
   # @param [Float]  mutation  % of population to mutate
+  # @param [Fixnum]  submutation  # of times to mutate mutants
   #
-  def initialize(src, popsize, terminate, mutation)
+  def initialize(src, popsize, terminate, mutation, submutation)
     @src       = src
     @srcpos    = src.get_child_positions()
     @popsize   = popsize
     @terminate = terminate
     @mutation  = mutation
+    @submutation = submutation
   end
 
   # Run the genetic algorithm.
@@ -39,7 +44,13 @@ class RnaSec::GeneticAlgorithm::Runner
     while true
       # mutate
       to_mut = population.sample(@mutation * @popsize)
-      to_mut.each { |t| population << point_mutation(t) }
+      to_mut.each do |t|
+        mutant = RnaSec::GeneticAlgorithm::Operators.point_mutation(t)
+        @submutation.times do
+          mutant = RnaSec::GeneticAlgorithm::Operators.point_mutation(mutant)
+        end
+        population << mutant
+      end
 
       # get fitness of the population
       fits   = fitness_pop(population)
@@ -94,7 +105,7 @@ class RnaSec::GeneticAlgorithm::Runner
   def scramble_tree(tree, n)
     mutated = tree.clone()
     n.times do
-      mutated = point_mutation(mutated)
+      mutated = RnaSec::GeneticAlgorithm::Operators::point_mutation(mutated)
     end
 
     mutated
