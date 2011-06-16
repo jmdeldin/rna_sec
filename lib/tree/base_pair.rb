@@ -42,7 +42,13 @@ module RnaSec::Tree
       self.class.to_s + "<#{@five_nuc.upcase}#{@five_idx}-#{@three_nuc.upcase}#{@three_idx}>"
     end
 
+    def find(x)
+      fail(WrongNodeError, 'Wrong node chosen')
+    end
+
   end
 
 end
 
+class WrongNodeError < RuntimeError
+end
