@@ -8,7 +8,7 @@ group :development do
   # coloring in tests
   gem 'turn', '~> 0.8.2'
 
-  gem 'rake', '~> 0.9.0'
+  gem 'rake', '>= 0.9.0'
 
   gem 'rcov', '>= 0.9.0'
 
