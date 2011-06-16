@@ -1,0 +1,6 @@
+= DISCLAIMER
+
+None of the test data is guaranteed to be biologically legal. Indexes and
+bases are chosen arbitrarily, and thus, test cases might pair C's with T's or
+X's even, given the NT isn't very important.
+
