@@ -107,7 +107,7 @@ module RnaSec::CtParser
     #
     # 1. The last element is a base pair.
     #
-    # 2. The last element's 5' index is the one less than the current
+    # 2. The last element's 5' index is one less than the current
     #    element's index.
     #      @last.five_idx == @cur.idx - 1
     #
@@ -123,6 +123,18 @@ module RnaSec::CtParser
       return false unless base_pair_part?
       return false if hairpin?
       true
+    end
+
+    # Debugging: Evaluate all rules.
+    #
+    # @return [Hash]
+    #
+    def eval_all
+      meths = (self.class.instance_methods - Object.instance_methods).grep(/\?/)
+
+      h = {}
+      meths.each { |m| h[m] = self.send(m) }
+      h
     end
 
   end

@@ -22,6 +22,7 @@ module RnaSec::CtParser
 
       records.each_with_index do |rec, i|
         rule = Rules.new(rec, last, bases)
+
         cur  = nil # what we think it is
 
         # If we saw a hairpin, add the hairpin to the curroot, clear out bases
@@ -50,9 +51,12 @@ module RnaSec::CtParser
             end
           end
 
+          # We just saw an IL, so add current root as a child of the
+          # existing root and make a new current root
           if rule.internal_loop?
-            root << curroot unless curroot.is_a?(RnaSec::Tree::Root)
-            curroot = RnaSec::Tree::InternalLoop.new(last, [ cur ])
+            newroot = RnaSec::Tree::InternalLoop.new(last)
+            curroot << newroot
+            curroot = newroot
           elsif rule.bulge?
             curroot << RnaSec::Tree::Bulge.new(bases)
             bases = []
@@ -73,13 +77,7 @@ module RnaSec::CtParser
         bases = []
       end
 
-      # If we never got past one level, return curroot.
-      if curroot == root
-        curroot
-      else
-        # Otherwise, append the last root to the parent Root.
-        root << curroot
-      end
+       root
     end
 
     # Converts each line of the CT file into Record objects.
