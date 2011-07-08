@@ -215,5 +215,24 @@ class TestMultiNode < MiniTest::Unit::TestCase
     assert_equal parent.five_idx, child.parent.five_idx
   end
 
-end
+  def test_components
+    bases = [
+      BasePair.new(Base.new(9, :g), Base.new(12, :c)),
+      BasePair.new(Base.new(10, :g), Base.new(11, :c)),
+    ]
+    ends = BasePair.new(Base.new(7, :g), Base.new(8, :c))
+    tree = RnaSec::Tree::MultiNode.new(ends, bases)
 
+    root = RnaSec::Tree::Root.new()
+    root << BasePair.new(Base.new(0, :a), Base.new(20, :c))
+    root << tree
+    root << @m
+
+    m = RnaSec::Tree::MultiNode.new(ends, bases)
+    assert_equal [root, tree, @m], root.components()
+    assert_equal [m], m.components()
+
+    assert_equal [root, tree], root.components(@m), 'Should exclude self but include root'
+  end
+
+end

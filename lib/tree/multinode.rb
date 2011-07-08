@@ -149,7 +149,7 @@ module RnaSec::Tree
     # @return [Array]
     #
     def get_child_positions
-      arr = self.is_a?(Root) ? [] : [ @five_idx, @three_idx ] 
+      arr = self.is_a?(Root) ? [] : [ @five_idx, @three_idx ]
 
       if children().any?
         tmp = []
@@ -280,6 +280,26 @@ module RnaSec::Tree
       # is being checked by any callers.
 
       nil
+    end
+
+    # Returns the components of a tree as a flat array of objects.
+    #
+    # @param [MultiNode] node   specify this to exclude certain nodes
+    # @return [Array]
+    #
+    def components(node = nil)
+      ary = [self] + @children.map do |x|
+        unless x.is_a?(BasePair) || x.is_a?(Base) || (node && (x == node || node.parent == x))
+          x.components()
+        end
+      end.reject { |x| x.nil? }.flatten
+
+      # remove any parents of node
+      if node
+        ary.reject! { |x| x == node.parent unless x.is_a?(Root) }
+      end
+
+      ary
     end
 
   end
