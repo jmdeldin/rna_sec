@@ -10,8 +10,6 @@ end
 
 require 'minitest/autorun'
 
-$VERBOSE = true
-
 # Returns the project root (src).
 #
 def project_root

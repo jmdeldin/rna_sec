@@ -1,6 +1,5 @@
 require_relative 'test_helper'
 
-$VERBOSE = true
 class TestBase < MiniTest::Unit::TestCase
 
   def setup

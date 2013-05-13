@@ -3,7 +3,7 @@ require_relative 'test_helper'
 class TestRoot < MiniTest::Unit::TestCase
 
   def test_new
-    r = RnaSec::Tree::Root.new()
+    RnaSec::Tree::Root.new()
   end
 
   def test_to_vienna
