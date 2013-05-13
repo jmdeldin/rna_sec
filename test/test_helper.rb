@@ -9,7 +9,6 @@ rescue Bundler::BundlerError => e
 end
 
 require 'minitest/autorun'
-require 'turn'
 
 $VERBOSE = true
 
@@ -54,3 +53,5 @@ def get_fixture(fn, local = '')
   end
 end
 
+require 'simplecov'
+SimpleCov.start
